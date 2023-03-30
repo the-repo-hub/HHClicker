@@ -1,0 +1,50 @@
+<ns0:Task xmlns:ns0="http://schemas.microsoft.com/windows/2004/02/mit/task" version="1.3">
+  <ns0:RegistrationInfo>
+    <ns0:Date>2023-01-26T20:48:01.42365</ns0:Date>
+    <ns0:Author>BigBrother1</ns0:Author>
+    <ns0:Description>clicks button</ns0:Description>
+  </ns0:RegistrationInfo>
+  <ns0:Triggers>
+    <ns0:TimeTrigger>
+      <ns0:StartBoundary>2023-03-30T16:04:00</ns0:StartBoundary>
+      <ns0:Enabled>true</ns0:Enabled>
+    </ns0:TimeTrigger>
+  </ns0:Triggers>
+  <ns0:Principals>
+    <ns0:Principal id="Author">
+      <ns0:UserId>BigBrother\BigBrother1</ns0:UserId>
+      <ns0:LogonType>S4U</ns0:LogonType>
+      <ns0:RunLevel>HighestAvailable</ns0:RunLevel>
+    </ns0:Principal>
+  </ns0:Principals>
+  <ns0:Settings>
+    <ns0:MultipleInstancesPolicy>IgnoreNew</ns0:MultipleInstancesPolicy>
+    <ns0:DisallowStartIfOnBatteries>false</ns0:DisallowStartIfOnBatteries>
+    <ns0:StopIfGoingOnBatteries>true</ns0:StopIfGoingOnBatteries>
+    <ns0:AllowHardTerminate>true</ns0:AllowHardTerminate>
+    <ns0:StartWhenAvailable>false</ns0:StartWhenAvailable>
+    <ns0:RunOnlyIfNetworkAvailable>true</ns0:RunOnlyIfNetworkAvailable>
+    <ns0:IdleSettings>
+      <ns0:StopOnIdleEnd>true</ns0:StopOnIdleEnd>
+      <ns0:RestartOnIdle>false</ns0:RestartOnIdle>
+    </ns0:IdleSettings>
+    <ns0:AllowStartOnDemand>true</ns0:AllowStartOnDemand>
+    <ns0:Enabled>true</ns0:Enabled>
+    <ns0:Hidden>false</ns0:Hidden>
+    <ns0:RunOnlyIfIdle>false</ns0:RunOnlyIfIdle>
+    <ns0:DisallowStartOnRemoteAppSession>false</ns0:DisallowStartOnRemoteAppSession>
+    <ns0:UseUnifiedSchedulingEngine>false</ns0:UseUnifiedSchedulingEngine>
+    <ns0:WakeToRun>false</ns0:WakeToRun>
+    <ns0:ExecutionTimeLimit>P3D</ns0:ExecutionTimeLimit>
+    <ns0:Priority>7</ns0:Priority>
+    <ns0:RestartOnFailure>
+      <ns0:Interval>PT1M</ns0:Interval>
+      <ns0:Count>3</ns0:Count>
+    </ns0:RestartOnFailure>
+  </ns0:Settings>
+  <ns0:Actions Context="Author">
+    <ns0:Exec>
+      <ns0:Command>C:\Users\BigBrother1\Desktop\hhclick\main.py</ns0:Command>
+    </ns0:Exec>
+  </ns0:Actions>
+</ns0:Task>
