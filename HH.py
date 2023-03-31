@@ -5,6 +5,7 @@ from selenium.webdriver.firefox.service import Service
 from Tasks import Tasks
 import ast
 import os
+from selenium.common.exceptions import NoSuchElementException
 
 
 class HHClicker(Firefox):
@@ -72,6 +73,12 @@ class HHClicker(Firefox):
             return True
         return False
 
+    def find_element(self, *args, **kwargs):
+        try:
+            return super().find_element(*args, **kwargs)
+        except NoSuchElementException:
+            return None
+
     def run(self):
         try:
             self.insert_cookies() # вставить куки
@@ -82,6 +89,9 @@ class HHClicker(Firefox):
             for button in buttons:
                 if button.text == 'Поднять в поиске':
                     button.click()
+                    close = self.find_element(By.XPATH, '/html/body/div[12]/div/div[1]/div[2]/div[1]/button')
+                    if close:
+                        close.click()
             self.__create_tasks()
         except Exception as e:
             print(e.__str__())
