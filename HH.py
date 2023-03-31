@@ -9,9 +9,9 @@ import os
 
 class HHClicker(Firefox):
     url_main = 'https://spb.hh.ru/account/login?backurl=%2F&hhtmFrom=main'
+    summary_url = 'https://spb.hh.ru/applicant/resumes'
 
     def __init__(self):
-        self.summary_url = 'https://spb.hh.ru/applicant/resumes'  # ссылка на резюме
         self.difference = 200  # разница между активным режимом и спящим (в сек)
         self.cookies = self.get_cookies_from_file()
         super().__init__(service=Service(log_path='NUL'))
@@ -29,11 +29,18 @@ class HHClicker(Firefox):
         return future + datetime.timedelta(minutes=1) # запас в минуту
 
     def __create_tasks(self):
-        element = self.find_element(By.CLASS_NAME, "applicant-resumes-action")
-        future = self.__get_future(element)
+        elements = self.find_elements(By.CLASS_NAME, "applicant-resumes-action_second")
+        buffer = None
+        for el in elements:
+            future = self.__get_future(el)
+            if not buffer:
+                buffer = future
+            elif buffer < future:
+                buffer = future
+
         self.close()
         print('Creating tasks...')
-        tasks = Tasks(self.difference, future)
+        tasks = Tasks(self.difference, buffer)
         tasks.create_tasks()
 
     def insert_cookies(self):
@@ -55,8 +62,8 @@ class HHClicker(Firefox):
                     return result
                 else:
                     exit('Not valid cookies!')
-        except Exception as e:
-            exit(e)
+        except SyntaxError:
+            exit('Empty cookies.py, run obtain_cookies.py first!')
 
     def auth_complete(self):
         if self.current_url == self.summary_url:
@@ -68,11 +75,11 @@ class HHClicker(Firefox):
             self.insert_cookies() # вставить куки
             self.get(self.summary_url)
             if not self.auth_complete():
-                exit('Please, update cookie')
-            button = self.find_element(By.XPATH,'//button[@class="bloko-link"][@type="button"][@data-qa="resume-update-button_actions"]')
-            if button.text == 'Поднять в поиске':
-                button.click()
-                self.refresh() # костыль
+                exit('Please, update cookies!')
+            buttons = self.find_elements(By.XPATH,'//button[@class="bloko-link"][@type="button"][@data-qa="resume-update-button_actions"]')
+            for button in buttons:
+                if button.text == 'Поднять в поиске':
+                    button.click()
             self.__create_tasks()
         except Exception as e:
             print(e.__str__())

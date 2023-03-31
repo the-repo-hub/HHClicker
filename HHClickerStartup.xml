@@ -42,7 +42,7 @@
   </ns0:Settings>
   <ns0:Actions Context="Author">
     <ns0:Exec>
-      <ns0:Command>C:\Users\BigBrother1\Desktop\hhclick\main.py</ns0:Command>
+      <ns0:Command>C:\Users\BigBrother1\PycharmProjects\HHClicker\main.py</ns0:Command>
     </ns0:Exec>
   </ns0:Actions>
 </ns0:Task>

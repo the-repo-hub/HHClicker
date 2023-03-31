@@ -4,8 +4,6 @@ import argparse
 import os
 
 
-# requirements
-
 def main():
     try:
         print('Starting...\n')

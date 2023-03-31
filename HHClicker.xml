@@ -6,7 +6,7 @@
   </ns0:RegistrationInfo>
   <ns0:Triggers>
     <ns0:TimeTrigger>
-      <ns0:StartBoundary>2023-03-30T16:04:00</ns0:StartBoundary>
+      <ns0:StartBoundary>2023-04-01T00:52:00</ns0:StartBoundary>
       <ns0:Enabled>true</ns0:Enabled>
     </ns0:TimeTrigger>
   </ns0:Triggers>
@@ -44,7 +44,7 @@
   </ns0:Settings>
   <ns0:Actions Context="Author">
     <ns0:Exec>
-      <ns0:Command>C:\Users\BigBrother1\Desktop\hhclick\main.py</ns0:Command>
+      <ns0:Command>C:\Users\BigBrother1\PycharmProjects\HHClicker\main.py</ns0:Command>
     </ns0:Exec>
   </ns0:Actions>
 </ns0:Task>
