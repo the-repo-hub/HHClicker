@@ -64,6 +64,8 @@ class HHClicker(Firefox):
                     exit('Not valid cookies!')
         except SyntaxError:
             exit('Empty cookies.py, run obtain_cookies.py first!')
+        except FileNotFoundError:
+            exit("Can't find cookies.txt")
 
     def auth_complete(self):
         if self.current_url == self.summary_url:
