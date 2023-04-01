@@ -6,6 +6,7 @@ from Tasks import Tasks
 import ast
 import os
 from selenium.common.exceptions import NoSuchElementException
+import time
 
 
 class HHClicker(Firefox):
@@ -85,10 +86,12 @@ class HHClicker(Firefox):
             self.get(self.summary_url)
             if not self.auth_complete():
                 exit('Please, update cookies!')
-            buttons = self.find_elements(By.XPATH,'//button[@class="bloko-link"][@type="button"][@data-qa="resume-update-button_actions"]')
+            buttons = self.find_elements(By.XPATH,'//button[@class="bloko-link"][@type="button"]['
+                                                  '@data-qa="resume-update-button_actions"]')
             for button in buttons:
                 if button.text == 'Поднять в поиске':
                     button.click()
+                    time.sleep(3)
                     close = self.find_element(By.XPATH, '/html/body/div[12]/div/div[1]/div[2]/div[1]/button')
                     if close:
                         close.click()
