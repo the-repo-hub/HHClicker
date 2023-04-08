@@ -15,6 +15,12 @@ class HHClicker(Firefox):
 
     def __init__(self):
         self.difference = 200  # разница между активным режимом и спящим (в сек)
+
+        try:
+            self.file = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cookies.txt'), 'r+')
+        except FileNotFoundError:
+            exit("Can't find cookies.txt")
+
         self.cookies = self.get_cookies_from_file()
         super().__init__(service=Service(log_path='NUL'))
 
@@ -52,22 +58,18 @@ class HHClicker(Firefox):
         for c in self.cookies:
             self.add_cookie(c)
 
-    @staticmethod
-    def get_cookies_from_file():
+    def get_cookies_from_file(self):
         try:
-            with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cookies.txt')) as cookies:
-                result = ast.literal_eval(cookies.read())
-                if isinstance(result, list):
-                    for c in result:
-                        if not isinstance(c, dict):
-                            exit('Not valid cookies!')
-                    return result
-                else:
-                    exit('Not valid cookies!')
+            result = ast.literal_eval(self.file.read())
+            if isinstance(result, list):
+                for c in result:
+                    if not isinstance(c, dict):
+                        exit('Not valid cookies!')
+                return result
+            else:
+                exit('Not valid cookies!')
         except SyntaxError:
             exit('Empty cookies.txt, run obtain_cookies.py first!')
-        except FileNotFoundError:
-            exit("Can't find cookies.txt")
 
     def auth_complete(self):
         if self.current_url == self.summary_url:
@@ -86,8 +88,8 @@ class HHClicker(Firefox):
             self.get(self.summary_url)
             if not self.auth_complete():
                 exit('Please, update cookies!')
-            with open('cookies.txt', 'w') as file:
-                file.write(self.get_cookies().__str__())
+            self.file.write(self.get_cookies().__str__())
+            self.file.close()
             buttons = self.find_elements(By.XPATH,'//button[@class="bloko-link"][@type="button"]['
                                                   '@data-qa="resume-update-button_actions"]')
             for button in buttons:
