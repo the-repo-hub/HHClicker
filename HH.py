@@ -65,7 +65,7 @@ class HHClicker(Firefox):
                 else:
                     exit('Not valid cookies!')
         except SyntaxError:
-            exit('Empty cookies.py, run obtain_cookies.py first!')
+            exit('Empty cookies.txt, run obtain_cookies.py first!')
         except FileNotFoundError:
             exit("Can't find cookies.txt")
 
@@ -86,6 +86,8 @@ class HHClicker(Firefox):
             self.get(self.summary_url)
             if not self.auth_complete():
                 exit('Please, update cookies!')
+            with open('cookies.txt', 'w') as file:
+                file.write(self.get_cookies().__str__())
             buttons = self.find_elements(By.XPATH,'//button[@class="bloko-link"][@type="button"]['
                                                   '@data-qa="resume-update-button_actions"]')
             for button in buttons:
