@@ -1,5 +1,4 @@
 from main import HHClicker
-from selenium.webdriver.firefox.options import Options
 
 
 def obtain_cookies(obj):
