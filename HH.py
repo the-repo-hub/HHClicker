@@ -1,7 +1,7 @@
-from selenium.webdriver import Firefox
+from selenium.webdriver import Chrome
 import datetime
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.chrome.service import Service
 from Tasks import Tasks
 import ast
 import os
@@ -9,7 +9,7 @@ from selenium.common.exceptions import NoSuchElementException
 import time
 
 
-class HHClicker(Firefox):
+class HHClicker(Chrome):
     url_main = 'https://spb.hh.ru/account/login?backurl=%2F&hhtmFrom=main'
     summary_url = 'https://spb.hh.ru/applicant/resumes'
 
@@ -89,8 +89,7 @@ class HHClicker(Firefox):
             with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cookies.txt'), 'w') as cookies:
                 cookies.write(self.get_cookies().__str__())
 
-            buttons = self.find_elements(By.XPATH,'//button[@class="bloko-link"][@type="button"]['
-                                                  '@data-qa="resume-update-button_actions"]')
+            buttons = self.find_elements(By.CSS_SELECTOR,'button[data-qa="resume-update-button_actions"]')
             for button in buttons:
                 if button.text == 'Поднять в поиске':
                     button.click()
