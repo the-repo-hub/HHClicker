@@ -1,16 +1,15 @@
-from selenium.webdriver import Chrome
+from selenium.webdriver import Firefox
 import datetime
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.support.wait import WebDriverWait
 from Tasks import Tasks
 import ast
 import os
-from selenium.common.exceptions import NoSuchElementException
-import time
+from selenium.common.exceptions import TimeoutException
 
 
-class HHClicker(Chrome):
+class HHClicker(Firefox):
     url_main = 'https://spb.hh.ru/account/login?backurl=%2F&hhtmFrom=main'
     summary_url = 'https://spb.hh.ru/applicant/resumes'
 
@@ -84,7 +83,7 @@ class HHClicker(Chrome):
             with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cookies.txt'), 'w') as cookies:
                 cookies.write(self.get_cookies().__str__())
 
-            buttons = self.find_elements(By.CSS_SELECTOR, 'button[data-qa="resume-update-button_actions"]')
+            buttons = self.find_elements(By.CSS_SELECTOR, 'button[data-qa="resume-update-button_actions"][class="bloko-link"]')
             for button in buttons:
                 if button.text == 'Поднять в поиске':
                     button.click()
@@ -92,7 +91,7 @@ class HHClicker(Chrome):
                     close = WebDriverWait(self, timeout=10).until(
                         lambda d: self.find_element(By.CSS_SELECTOR, 'button[data-qa="bot-update-resume-modal__close-button"]'))
                     close.click()
-                except Exception:
+                except TimeoutException:
                     pass
             self.__create_tasks()
         except Exception as e:
