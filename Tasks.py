@@ -63,14 +63,3 @@ class Tasks:
         os.system(command)
         command = f"SCHTASKS /CREATE /tn {self.name_startup} /XML {self.xml_file_startup} /F"
         os.system(command)
-
-    def uninstall(self):
-        # будущий запуск
-        command = f"SCHTASKS /DELETE /tn {self.name}"
-        os.system(command)
-        command = f"SCHTASKS /DELETE /tn {self.name_sleep}"
-        os.system(command)
-        command = f"SCHTASKS /DELETE /tn {self.name_startup}"
-        os.system(command)
-
-
