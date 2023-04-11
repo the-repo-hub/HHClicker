@@ -2,6 +2,7 @@ from selenium.webdriver import Chrome
 import datetime
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support.wait import WebDriverWait
 from Tasks import Tasks
 import ast
 import os
@@ -74,12 +75,6 @@ class HHClicker(Chrome):
             return True
         return False
 
-    def find_element(self, *args, **kwargs):
-        try:
-            return super().find_element(*args, **kwargs)
-        except NoSuchElementException:
-            return None
-
     def run(self):
         try:
             self.insert_cookies() # вставить куки
@@ -89,14 +84,16 @@ class HHClicker(Chrome):
             with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cookies.txt'), 'w') as cookies:
                 cookies.write(self.get_cookies().__str__())
 
-            buttons = self.find_elements(By.CSS_SELECTOR,'button[data-qa="resume-update-button_actions"]')
+            buttons = self.find_elements(By.CSS_SELECTOR, 'button[data-qa="resume-update-button_actions"]')
             for button in buttons:
                 if button.text == 'Поднять в поиске':
                     button.click()
-                    time.sleep(3)
-                    close = self.find_element(By.XPATH, '/html/body/div[12]/div/div[1]/div[2]/div[1]/button')
-                    if close:
-                        close.click()
+                try:
+                    close = WebDriverWait(self, timeout=10).until(
+                        lambda d: self.find_element(By.CSS_SELECTOR, 'button[data-qa="bot-update-resume-modal__close-button"]'))
+                    close.click()
+                except Exception:
+                    pass
             self.__create_tasks()
         except Exception as e:
             print(e.__str__())
