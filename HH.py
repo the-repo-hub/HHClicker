@@ -1,7 +1,7 @@
-from selenium.webdriver import Firefox
+from selenium.webdriver import Chrome
 import datetime
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.wait import WebDriverWait
 from Tasks import Tasks
 import ast
@@ -9,7 +9,7 @@ import os
 from selenium.common.exceptions import TimeoutException
 
 
-class HHClicker(Firefox):
+class HHClicker(Chrome):
     url_main = 'https://spb.hh.ru/account/login?backurl=%2F&hhtmFrom=main'
     summary_url = 'https://spb.hh.ru/applicant/resumes'
 
