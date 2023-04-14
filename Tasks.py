@@ -5,11 +5,12 @@ from xml.etree import ElementTree as Et
 
 
 class Tasks:
+    name = 'HHClicker'
+    name_sleep = name + 'Sleep'
+    name_startup = name + 'Startup'
     def __init__(self, difference: int, future: Union[datetime.datetime, None] = None):
         # HHClick and HHClickSleep
-        self.name = 'HHClicker'
-        self.name_sleep = self.name + 'Sleep'
-        self.name_startup = self.name + 'Startup'
+
         self.difference = difference
         self.future = future
         self.root_dir = os.path.dirname(os.path.abspath(__file__))
@@ -62,4 +63,13 @@ class Tasks:
         command = f"SCHTASKS /CREATE /tn {self.name_sleep} /XML {self.xml_file_slept} /F"
         os.system(command)
         command = f"SCHTASKS /CREATE /tn {self.name_startup} /XML {self.xml_file_startup} /F"
+        os.system(command)
+
+    @classmethod
+    def delete_tasks(cls):
+        command = f"SCHTASKS /DELETE /tn {cls.name} /F"
+        os.system(command)
+        command = f"SCHTASKS /DELETE /tn {cls.name_sleep} /F"
+        os.system(command)
+        command = f"SCHTASKS /DELETE /tn {cls.name_startup} /F"
         os.system(command)
